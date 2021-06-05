@@ -1,20 +1,20 @@
 //
-//  ViewController.swift
+//  Lesson4ViewController.swift
 //  UIKitGuide
 //
-//  Created by Timothy Ercia on 5/25/21.
+//  Created by Timothy Ercia on 6/4/21.
 //  Copyright © 2021 Timothy Ercia. All rights reserved.
 //
 
 import UIKit
 
-class ViewController: UIViewController {
-
+class Lesson4ViewController: UIViewController {
+   
    override func viewDidLoad() {
       super.viewDidLoad()
+      
       // Do any additional setup after loading the view.
    }
-
-
+   
+   
 }
-
