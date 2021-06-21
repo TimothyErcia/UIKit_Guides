@@ -44,7 +44,6 @@ class Lesson1ViewController: UIViewController {
       mview.distribution = .fillEqually
       mview.spacing = 10
       mview.translatesAutoresizingMaskIntoConstraints = false
-      mview.layer.borderWidth = 1.0
       return mview
    }()
    
@@ -70,7 +69,7 @@ class Lesson1ViewController: UIViewController {
       
       view.backgroundColor = .white
       configureConstraint()
-      hideKeyboardWhenTappedAround()
+      hideKeyboardUIView()
    }
    
    private func configureConstraint(){

@@ -14,6 +14,16 @@
 		4D0C4F62266B4DDE009D9333 /* HideKeyboardExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C4F61266B4DDE009D9333 /* HideKeyboardExtension.swift */; };
 		4D0C4F64266B4F16009D9333 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C4F63266B4F16009D9333 /* Post.swift */; };
 		4D0C4F66266B5B8F009D9333 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C4F65266B5B8F009D9333 /* Constants.swift */; };
+		4D0C4F68266BDA4F009D9333 /* Lesson3ViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C4F67266BDA4F009D9333 /* Lesson3ViewCell.swift */; };
+		4D0C4F6A266D01B9009D9333 /* Photos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C4F69266D01B9009D9333 /* Photos.swift */; };
+		4D0C4F6C266D02D5009D9333 /* Lesson4ViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C4F6B266D02D5009D9333 /* Lesson4ViewCell.swift */; };
+		4D0C4F6E267370CF009D9333 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C4F6D267370CF009D9333 /* Observable.swift */; };
+		4D0C4F70267373DB009D9333 /* PhotoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C4F6F267373DB009D9333 /* PhotoListViewModel.swift */; };
+		4D0C4F72267492A3009D9333 /* ControllerTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C4F71267492A3009D9333 /* ControllerTransition.swift */; };
+		4D0C4F772674A157009D9333 /* APICollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C4F762674A157009D9333 /* APICollection.swift */; };
+		4D0C4F79267607B4009D9333 /* Lesson5ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C4F78267607B4009D9333 /* Lesson5ViewController.swift */; };
+		4D0C4F7B26771F26009D9333 /* Lesson5ViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C4F7A26771F26009D9333 /* Lesson5ViewCell.swift */; };
+		4D0C4F7D2677208C009D9333 /* CustomAppBarwithSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C4F7C2677208C009D9333 /* CustomAppBarwithSegment.swift */; };
 		4D418781265CF4C5001D522D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D418780265CF4C5001D522D /* AppDelegate.swift */; };
 		4D418783265CF4C5001D522D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D418782265CF4C5001D522D /* SceneDelegate.swift */; };
 		4D41878B265CF4C6001D522D /* UIKitGuide.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4D418789265CF4C6001D522D /* UIKitGuide.xcdatamodeld */; };
@@ -22,6 +32,14 @@
 		4D4187A1265E2311001D522D /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4187A0265E2311001D522D /* HomeViewController.swift */; };
 		4D4187A3265E4225001D522D /* Lesson1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4187A2265E4225001D522D /* Lesson1ViewController.swift */; };
 		4D4187A5265E43F0001D522D /* Lesson2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4187A4265E43F0001D522D /* Lesson2ViewController.swift */; };
+		4DB14192267A4AB8001EC4EB /* CoreDataCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB14191267A4AB8001EC4EB /* CoreDataCollection.swift */; };
+		4DB14196267A5036001EC4EB /* TodoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB14195267A5036001EC4EB /* TodoListViewModel.swift */; };
+		4DB141A2267CAC80001EC4EB /* TodoItem+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB141A0267CAC7F001EC4EB /* TodoItem+CoreDataClass.swift */; };
+		4DB141A3267CAC80001EC4EB /* TodoItem+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB141A1267CAC7F001EC4EB /* TodoItem+CoreDataProperties.swift */; };
+		4DB141A52680C1F1001EC4EB /* Lesson6ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB141A42680C1F1001EC4EB /* Lesson6ViewController.swift */; };
+		4DB141A82680C924001EC4EB /* Tab1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB141A72680C924001EC4EB /* Tab1ViewController.swift */; };
+		4DB141AA2680C930001EC4EB /* Tab2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB141A92680C930001EC4EB /* Tab2ViewController.swift */; };
+		4DB141AC2680C93E001EC4EB /* Tab3ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB141AB2680C93E001EC4EB /* Tab3ViewController.swift */; };
 		68B1132E628AB3C65A907528 /* Pods_UIKitGuide.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 796E71E170791F12256F7CB0 /* Pods_UIKitGuide.framework */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +51,16 @@
 		4D0C4F61266B4DDE009D9333 /* HideKeyboardExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideKeyboardExtension.swift; sourceTree = "<group>"; };
 		4D0C4F63266B4F16009D9333 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		4D0C4F65266B5B8F009D9333 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		4D0C4F67266BDA4F009D9333 /* Lesson3ViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson3ViewCell.swift; sourceTree = "<group>"; };
+		4D0C4F69266D01B9009D9333 /* Photos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photos.swift; sourceTree = "<group>"; };
+		4D0C4F6B266D02D5009D9333 /* Lesson4ViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson4ViewCell.swift; sourceTree = "<group>"; };
+		4D0C4F6D267370CF009D9333 /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		4D0C4F6F267373DB009D9333 /* PhotoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoListViewModel.swift; sourceTree = "<group>"; };
+		4D0C4F71267492A3009D9333 /* ControllerTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControllerTransition.swift; sourceTree = "<group>"; };
+		4D0C4F762674A157009D9333 /* APICollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICollection.swift; sourceTree = "<group>"; };
+		4D0C4F78267607B4009D9333 /* Lesson5ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson5ViewController.swift; sourceTree = "<group>"; };
+		4D0C4F7A26771F26009D9333 /* Lesson5ViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson5ViewCell.swift; sourceTree = "<group>"; };
+		4D0C4F7C2677208C009D9333 /* CustomAppBarwithSegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAppBarwithSegment.swift; sourceTree = "<group>"; };
 		4D41877D265CF4C5001D522D /* UIKitGuide.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UIKitGuide.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D418780265CF4C5001D522D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4D418782265CF4C5001D522D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -43,6 +71,14 @@
 		4D4187A0265E2311001D522D /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		4D4187A2265E4225001D522D /* Lesson1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson1ViewController.swift; sourceTree = "<group>"; };
 		4D4187A4265E43F0001D522D /* Lesson2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson2ViewController.swift; sourceTree = "<group>"; };
+		4DB14191267A4AB8001EC4EB /* CoreDataCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataCollection.swift; sourceTree = "<group>"; };
+		4DB14195267A5036001EC4EB /* TodoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListViewModel.swift; sourceTree = "<group>"; };
+		4DB141A0267CAC7F001EC4EB /* TodoItem+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "TodoItem+CoreDataClass.swift"; path = "/Users/timothyercia/Desktop/Project_stuff/Apple-Swift/UIKitGuide/UIKitGuide/TodoItem+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		4DB141A1267CAC7F001EC4EB /* TodoItem+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "TodoItem+CoreDataProperties.swift"; path = "/Users/timothyercia/Desktop/Project_stuff/Apple-Swift/UIKitGuide/UIKitGuide/TodoItem+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
+		4DB141A42680C1F1001EC4EB /* Lesson6ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lesson6ViewController.swift; sourceTree = "<group>"; };
+		4DB141A72680C924001EC4EB /* Tab1ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab1ViewController.swift; sourceTree = "<group>"; };
+		4DB141A92680C930001EC4EB /* Tab2ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab2ViewController.swift; sourceTree = "<group>"; };
+		4DB141AB2680C93E001EC4EB /* Tab3ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tab3ViewController.swift; sourceTree = "<group>"; };
 		6EF23200E1AEE6551CD4715D /* Pods-UIKitGuide.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UIKitGuide.debug.xcconfig"; path = "Target Support Files/Pods-UIKitGuide/Pods-UIKitGuide.debug.xcconfig"; sourceTree = "<group>"; };
 		796E71E170791F12256F7CB0 /* Pods_UIKitGuide.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UIKitGuide.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E341268FE2D43D2ACCF9CAB0 /* Pods-UIKitGuide.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UIKitGuide.release.xcconfig"; path = "Target Support Files/Pods-UIKitGuide/Pods-UIKitGuide.release.xcconfig"; sourceTree = "<group>"; };
@@ -69,6 +105,8 @@
 				4D0C4F52266746A4009D9333 /* Lesson3ViewController.swift */,
 				4D0C4F59266A67CB009D9333 /* Lesson3DetailViewController.swift */,
 				4D0C4F57266A67B3009D9333 /* Lesson4ViewController.swift */,
+				4D0C4F78267607B4009D9333 /* Lesson5ViewController.swift */,
+				4DB141A62680C8CC001EC4EB /* TabViewController */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -77,7 +115,10 @@
 			isa = PBXGroup;
 			children = (
 				4D0C4F5B266A68F9009D9333 /* CustomAppBar.swift */,
-				4D0C4F61266B4DDE009D9333 /* HideKeyboardExtension.swift */,
+				4D0C4F7C2677208C009D9333 /* CustomAppBarwithSegment.swift */,
+				4D0C4F67266BDA4F009D9333 /* Lesson3ViewCell.swift */,
+				4D0C4F6B266D02D5009D9333 /* Lesson4ViewCell.swift */,
+				4D0C4F7A26771F26009D9333 /* Lesson5ViewCell.swift */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -89,6 +130,24 @@
 				4D0C4F54266A674C009D9333 /* Core */,
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		4D0C4F73267494A1009D9333 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				4D0C4F61266B4DDE009D9333 /* HideKeyboardExtension.swift */,
+				4D0C4F71267492A3009D9333 /* ControllerTransition.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		4D0C4F752674A147009D9333 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				4D0C4F762674A157009D9333 /* APICollection.swift */,
+				4DB14191267A4AB8001EC4EB /* CoreDataCollection.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 		4D418774265CF4C5001D522D = {
@@ -112,11 +171,15 @@
 		4D41877F265CF4C5001D522D /* UIKitGuide */ = {
 			isa = PBXGroup;
 			children = (
+				4DB141A0267CAC7F001EC4EB /* TodoItem+CoreDataClass.swift */,
+				4DB141A1267CAC7F001EC4EB /* TodoItem+CoreDataProperties.swift */,
+				4D0C4F73267494A1009D9333 /* Extensions */,
 				4D0C4F56266A6760009D9333 /* Controllers */,
 				4D41879B265E2231001D522D /* View */,
 				4D41879A265CF543001D522D /* Resources */,
 				4D418798265CF51D001D522D /* ViewModel */,
 				4D418797265CF506001D522D /* Model */,
+				4D0C4F752674A147009D9333 /* Service */,
 				4D418780265CF4C5001D522D /* AppDelegate.swift */,
 				4D418782265CF4C5001D522D /* SceneDelegate.swift */,
 				4D41878E265CF4CC001D522D /* LaunchScreen.storyboard */,
@@ -130,6 +193,7 @@
 			isa = PBXGroup;
 			children = (
 				4D0C4F63266B4F16009D9333 /* Post.swift */,
+				4D0C4F69266D01B9009D9333 /* Photos.swift */,
 				4D0C4F65266B5B8F009D9333 /* Constants.swift */,
 			);
 			path = Model;
@@ -138,6 +202,9 @@
 		4D418798265CF51D001D522D /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				4D0C4F6D267370CF009D9333 /* Observable.swift */,
+				4D0C4F6F267373DB009D9333 /* PhotoListViewModel.swift */,
+				4DB14195267A5036001EC4EB /* TodoListViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -155,6 +222,17 @@
 			children = (
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		4DB141A62680C8CC001EC4EB /* TabViewController */ = {
+			isa = PBXGroup;
+			children = (
+				4DB141A42680C1F1001EC4EB /* Lesson6ViewController.swift */,
+				4DB141A72680C924001EC4EB /* Tab1ViewController.swift */,
+				4DB141A92680C930001EC4EB /* Tab2ViewController.swift */,
+				4DB141AB2680C93E001EC4EB /* Tab3ViewController.swift */,
+			);
+			path = TabViewController;
 			sourceTree = "<group>";
 		};
 		BAB02B21F8ED1A5C0B845143 /* Pods */ = {
@@ -288,18 +366,36 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DB141A2267CAC80001EC4EB /* TodoItem+CoreDataClass.swift in Sources */,
+				4DB14192267A4AB8001EC4EB /* CoreDataCollection.swift in Sources */,
+				4DB141A82680C924001EC4EB /* Tab1ViewController.swift in Sources */,
+				4D0C4F7B26771F26009D9333 /* Lesson5ViewCell.swift in Sources */,
 				4D0C4F5C266A68F9009D9333 /* CustomAppBar.swift in Sources */,
+				4DB141A3267CAC80001EC4EB /* TodoItem+CoreDataProperties.swift in Sources */,
+				4D0C4F7D2677208C009D9333 /* CustomAppBarwithSegment.swift in Sources */,
+				4D0C4F72267492A3009D9333 /* ControllerTransition.swift in Sources */,
 				4D0C4F5A266A67CB009D9333 /* Lesson3DetailViewController.swift in Sources */,
 				4D0C4F62266B4DDE009D9333 /* HideKeyboardExtension.swift in Sources */,
+				4D0C4F772674A157009D9333 /* APICollection.swift in Sources */,
+				4D0C4F6C266D02D5009D9333 /* Lesson4ViewCell.swift in Sources */,
+				4D0C4F79267607B4009D9333 /* Lesson5ViewController.swift in Sources */,
+				4D0C4F6A266D01B9009D9333 /* Photos.swift in Sources */,
+				4DB14196267A5036001EC4EB /* TodoListViewModel.swift in Sources */,
 				4D0C4F64266B4F16009D9333 /* Post.swift in Sources */,
 				4D418781265CF4C5001D522D /* AppDelegate.swift in Sources */,
 				4D418783265CF4C5001D522D /* SceneDelegate.swift in Sources */,
 				4D41878B265CF4C6001D522D /* UIKitGuide.xcdatamodeld in Sources */,
 				4D0C4F66266B5B8F009D9333 /* Constants.swift in Sources */,
+				4D0C4F68266BDA4F009D9333 /* Lesson3ViewCell.swift in Sources */,
 				4D0C4F53266746A4009D9333 /* Lesson3ViewController.swift in Sources */,
+				4D0C4F6E267370CF009D9333 /* Observable.swift in Sources */,
+				4DB141AA2680C930001EC4EB /* Tab2ViewController.swift in Sources */,
+				4D0C4F70267373DB009D9333 /* PhotoListViewModel.swift in Sources */,
+				4DB141A52680C1F1001EC4EB /* Lesson6ViewController.swift in Sources */,
 				4D4187A5265E43F0001D522D /* Lesson2ViewController.swift in Sources */,
 				4D0C4F58266A67B3009D9333 /* Lesson4ViewController.swift in Sources */,
 				4D4187A1265E2311001D522D /* HomeViewController.swift in Sources */,
+				4DB141AC2680C93E001EC4EB /* Tab3ViewController.swift in Sources */,
 				4D4187A3265E4225001D522D /* Lesson1ViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

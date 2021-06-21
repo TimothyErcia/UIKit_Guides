@@ -25,29 +25,12 @@ class HomeViewController: UIViewController {
       return mview
    }()
    
-   let lesson1Controller: UINavigationController = {
-      let vc = UINavigationController(rootViewController: Lesson1ViewController())
-      vc.modalPresentationStyle = .fullScreen
-      vc.isToolbarHidden = true
-      vc.navigationBar.isHidden = true
-      return vc
-   }()
-   
-   let lesson2Controller: UINavigationController = {
-      let vc = UINavigationController(rootViewController: Lesson2ViewController())
-      vc.modalPresentationStyle = .fullScreen
-      vc.isToolbarHidden = true
-      vc.navigationBar.isHidden = true
-      return vc
-   }()
-   
-   let lesson3Controller: UINavigationController = {
-      let vc = UINavigationController(rootViewController: Lesson3ViewController())
-      vc.modalPresentationStyle = .fullScreen
-      vc.isToolbarHidden = true
-      vc.navigationBar.isHidden = true
-      return vc
-   }()
+   let lesson1Controller = UINavigationController().setController(lesson: Lesson1ViewController())
+   let lesson2Controller = UINavigationController().setController(lesson: Lesson2ViewController())
+   let lesson3Controller = UINavigationController().setController(lesson: Lesson3ViewController())
+   let lesson4Controller = UINavigationController().setController(lesson: Lesson4ViewController())
+   let lesson5Controller = UINavigationController().setController(lesson: Lesson5ViewController())
+   let lesson6Controller = UINavigationController().setController(lesson: Lesson6ViewController())
    
    let titleLabel: UILabel = {
       let label = UILabel()
@@ -60,16 +43,25 @@ class HomeViewController: UIViewController {
    
    override func viewDidLoad() {
       super.viewDidLoad()
-      
+
       //view 
       view.addSubview(view1Constraint)
       view1Constraint.addSubview(titleLabel)
       view1Constraint.addSubview(contentVStack)
-      VStackConfiguration()
+      VStackConfiguration("Lesson 1", 1)
+      VStackConfiguration("Lesson 2", 2)
+      VStackConfiguration("Lesson 3", 3)
+      VStackConfiguration("Lesson 4", 4)
+      VStackConfiguration("Lesson 5", 5)
+      VStackConfiguration("Lesson 6", 6)
       
       //parent constraint
       configureConstraint()
       view.backgroundColor = .white
+   }
+   
+   override var prefersStatusBarHidden: Bool {
+      return true
    }
    
    private func configureConstraint(){
@@ -97,48 +89,20 @@ class HomeViewController: UIViewController {
       NSLayoutConstraint.activate(constraint)
    }
    
-   private func VStackConfiguration(){
-      let lesson1: UIButton = {
+   private func VStackConfiguration(_ lessonTitle: String, _ lessonTag: Int){
+      let lesson: UIButton = {
          let button = UIButton()
-         button.tag = 1
-         button.setTitle("Lesson 1", for: .normal)
+         button.setTitle(lessonTitle, for: .normal)
+         button.tag = lessonTag
          button.setTitleColor(.systemBlue, for: .normal)
          button.addTarget(self, action: #selector(toLesson), for: .touchUpInside)
          return button
       }()
       
-      let lesson2: UIButton = {
-         let button = UIButton()
-         button.tag = 2
-         button.setTitle("Lesson 2", for: .normal)
-         button.setTitleColor(.systemBlue, for: .normal)
-         button.addTarget(self, action: #selector(toLesson), for: .touchUpInside)
-         button.translatesAutoresizingMaskIntoConstraints = false
-         return button
-      }()
+      lesson.heightAnchor.constraint(equalToConstant: 40).isActive = true
+      lesson.widthAnchor.constraint(equalToConstant: 120).isActive = true
       
-      let lesson3: UIButton = {
-         let button = UIButton()
-         button.tag = 3
-         button.setTitle("Lesson 3", for: .normal)
-         button.setTitleColor(.systemBlue, for: .normal)
-         button.addTarget(self, action: #selector(toLesson), for: .touchUpInside)
-         button.translatesAutoresizingMaskIntoConstraints = false
-         return button
-      }()
-      
-      lesson1.heightAnchor.constraint(equalToConstant: 40).isActive = true
-      lesson1.widthAnchor.constraint(equalToConstant: 120).isActive = true
-      
-      lesson2.heightAnchor.constraint(equalToConstant: 40).isActive = true
-      lesson2.widthAnchor.constraint(equalToConstant: 120).isActive = true
-      
-      lesson3.heightAnchor.constraint(equalToConstant: 40).isActive = true
-      lesson3.widthAnchor.constraint(equalToConstant: 120).isActive = true
-      
-      contentVStack.addArrangedSubview(lesson1)
-      contentVStack.addArrangedSubview(lesson2)
-      contentVStack.addArrangedSubview(lesson3)
+      contentVStack.addArrangedSubview(lesson)
    }
    
    @objc private func toLesson(sender: UIButton){
@@ -149,9 +113,24 @@ class HomeViewController: UIViewController {
          self.present(lesson2Controller, animated: true)
       case 3:
          self.present(lesson3Controller, animated: true)
+      case 4:
+         self.present(lesson4Controller, animated: false)
+      case 5:
+         self.present(lesson5Controller, animated: false)
+      case 6:
+         self.present(lesson6Controller, animated: false)
       default:
-         print("Hello")
+         print("Hello world")
       }
    }
+}
 
+extension UINavigationController {
+   fileprivate func setController(lesson: UIViewController) -> UINavigationController{
+      let vc = UINavigationController(rootViewController: lesson)
+      vc.modalPresentationStyle = .fullScreen
+      vc.isToolbarHidden = true
+      vc.navigationBar.isHidden = true
+      return vc
+   }
 }
