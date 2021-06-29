@@ -25,13 +25,6 @@ class HomeViewController: UIViewController {
       return mview
    }()
    
-   let lesson1Controller = UINavigationController().setController(lesson: Lesson1ViewController())
-   let lesson2Controller = UINavigationController().setController(lesson: Lesson2ViewController())
-   let lesson3Controller = UINavigationController().setController(lesson: Lesson3ViewController())
-   let lesson4Controller = UINavigationController().setController(lesson: Lesson4ViewController())
-   let lesson5Controller = UINavigationController().setController(lesson: Lesson5ViewController())
-   let lesson6Controller = UINavigationController().setController(lesson: Lesson6ViewController())
-   
    let titleLabel: UILabel = {
       let label = UILabel()
       label.text = "Home"
@@ -40,6 +33,13 @@ class HomeViewController: UIViewController {
       label.translatesAutoresizingMaskIntoConstraints = false
       return label
    }()
+   
+   let lesson1Controller = UINavigationController().setController(lesson: Lesson1ViewController())
+   let lesson2Controller = UINavigationController().setController(lesson: Lesson2ViewController())
+   let lesson3Controller = UINavigationController().setController(lesson: Lesson3ViewController())
+   let lesson4Controller = UINavigationController().setController(lesson: Lesson4ViewController())
+   let lesson5Controller = UINavigationController().setController(lesson: Lesson5ViewController())
+   let lesson6Controller = UINavigationController().setController(lesson: Lesson6ViewController())
    
    override func viewDidLoad() {
       super.viewDidLoad()

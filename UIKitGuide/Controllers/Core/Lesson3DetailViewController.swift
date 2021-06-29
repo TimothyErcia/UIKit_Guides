@@ -10,28 +10,30 @@ import UIKit
 
 class Lesson3DetailViewController: UIViewController {
    
-   var selectedId: Int = 0
-   var postData: Post = Post(id: 0, userId: 0, title: "", body: "")
+   private var selectedId: Int?
+   private var postData: Post = Post(id: 0, userId: 0, title: "", body: "")
    
-   var postTitle: UILabel = {
+   private var postTitle: UILabel = {
+      let lb = UILabel()
+      lb.numberOfLines = 1
+      lb.font = .systemFont(ofSize: 18)
+      return lb
+   }()
+   
+   private var postBody: UILabel = {
+      let lb = UILabel()
+      lb.numberOfLines = 0
+      lb.font = .systemFont(ofSize: 18)
+      return lb
+   }()
+   
+   private var postId: UILabel = {
       let lb = UILabel()
       lb.font = .systemFont(ofSize: 18)
       return lb
    }()
    
-   var postBody: UILabel = {
-      let lb = UILabel()
-      lb.font = .systemFont(ofSize: 18)
-      return lb
-   }()
-   
-   var postId: UILabel = {
-      let lb = UILabel()
-      lb.font = .systemFont(ofSize: 18)
-      return lb
-   }()
-   
-   var postUserID: UILabel = {
+   private var postUserID: UILabel = {
       let lb = UILabel()
       lb.font = .systemFont(ofSize: 18)
       return lb
@@ -39,13 +41,13 @@ class Lesson3DetailViewController: UIViewController {
    
    let appBar = CustomAppBar()
    
-   let contentView: UIView = {
+   private let contentView: UIView = {
       let mview = UIView()
       mview.translatesAutoresizingMaskIntoConstraints = false
       return mview
    }()
    
-   let wrapper: UIStackView = {
+   private let wrapper: UIStackView = {
       let mview = UIStackView()
       mview.axis = .vertical
       mview.spacing = 10
@@ -60,6 +62,10 @@ class Lesson3DetailViewController: UIViewController {
 
    required init?(coder: NSCoder) {
       fatalError("init(coder:) has not been implemented")
+   }
+   
+   deinit {
+      print("recall memory \(self.postData)")
    }
    
    override func viewDidLoad() {
@@ -100,15 +106,14 @@ class Lesson3DetailViewController: UIViewController {
    }
    
    private func fetchData(){
-      API_PostCollection().getData(param: "\(selectedId)") { (res) in
-         let que = DispatchQueue(label: "fetch-data")
-         que.async {
+      API_PostCollection().getData(param: "\(selectedId ?? 0)") { (res) in
+         DispatchQueue.global(qos: .userInitiated).async {
             self.postData = res
          }
          
          DispatchQueue.main.async {
-            self.postTitle.text = "Title: " + self.postData.title
-            self.postBody.text = "Body: " + self.postData.body
+            self.postTitle.text = "Title: \(self.postData.title)"
+            self.postBody.text = "Body: \(self.postData.body)"
             self.postUserID.text = "UserId: " + "\(self.postData.userId)"
             self.postId.text = "ID: " + "\(self.postData.id)"
          }
@@ -122,7 +127,7 @@ class Lesson3DetailViewController: UIViewController {
    }
    
    @objc private func backToHome(_ sender: UIButton){
-      dismiss(animated: true, completion: nil)
+      TransitionToLeft()
    }
    
    

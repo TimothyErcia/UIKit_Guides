@@ -10,20 +10,20 @@ import UIKit
 
 class Lesson3ViewController: UIViewController {
    
-   var postData: [Post] = []
+   private var postData: [Post] = []
    
-   var newPostData: Post = Post(id: 1, userId: 1, title: "Sample title", body: "Sample body")
+   private var newPostData: Post = Post(id: 1, userId: 1, title: "Sample title", body: "Sample body")
    
-   let appBar = CustomAppBar()
+   var appBar = CustomAppBar()
    
-   let toolbarView: UIStackView = {
+   private let toolbarView: UIStackView = {
       let mview = UIStackView()
       mview.axis = .horizontal
       mview.translatesAutoresizingMaskIntoConstraints = false
       return mview
    }()
    
-   let searchBar: UISearchBar = {
+   private var searchBar: UISearchBar = {
       let search = UISearchBar()
       search.placeholder = "Search item"
       search.autocapitalizationType = .none
@@ -31,7 +31,7 @@ class Lesson3ViewController: UIViewController {
       return search
    }()
    
-   let addButton: UIButton = {
+   private let addButton: UIButton = {
       let btn = UIButton()
       let image = UIImage(named: "add-circle")
       let template = image?.withRenderingMode(.alwaysTemplate)
@@ -47,13 +47,13 @@ class Lesson3ViewController: UIViewController {
       return btn
    }()
    
-   let contentView: UIView = {
+   private let contentView: UIView = {
       let mview = UIView()
       mview.translatesAutoresizingMaskIntoConstraints = false
       return mview
    }()
    
-   let tableContent: UITableView = {
+   private let tableContent: UITableView = {
       let mview = UITableView()
       mview.estimatedRowHeight = 120
       mview.rowHeight = UITableView.automaticDimension
@@ -62,6 +62,10 @@ class Lesson3ViewController: UIViewController {
       mview.translatesAutoresizingMaskIntoConstraints = false
       return mview
    }()
+   
+   deinit {
+      print("recall memory")
+   }
    
    override func viewDidLoad() {
       super.viewDidLoad()
@@ -113,19 +117,18 @@ class Lesson3ViewController: UIViewController {
    }
    
    private func populateView(){
-      API_PostCollection().getAllData { (res) in
+      API_PostCollection().getAllData { [weak self](res) in
          
          //thread for getting data
-         let queue = DispatchQueue(label: "data-que")
-         queue.async {
-            self.postData = res
+         DispatchQueue.global().async {
+            self?.postData = res
          }
          
          //thread for updating view
          DispatchQueue.main.async {
-            self.tableContent.delegate = self
-            self.tableContent.dataSource = self
-            self.tableContent.reloadData()
+            self?.tableContent.delegate = self
+            self?.tableContent.dataSource = self
+            self?.tableContent.reloadData()
          }
       }
    }
@@ -137,18 +140,17 @@ class Lesson3ViewController: UIViewController {
    }
    
    @objc private func backToHome(){
-      dismiss(animated: true, completion: nil)
+      TransitionToLeft()
    }
    
    @objc private func createData(){
-      API_PostCollection().addData(post: newPostData) { (res) in
-         let que = DispatchQueue(label: "create-data")
-         que.async {
+      API_PostCollection().addData(post: newPostData) { [weak self](res) in
+         DispatchQueue.global().async {
             print(res)
          }
          
          DispatchQueue.main.async {
-            self.tableContent.reloadData()
+            self?.tableContent.reloadData()
          }
       }
    }
@@ -171,6 +173,7 @@ extension Lesson3ViewController: UITableViewDelegate, UITableViewDataSource {
       
       let navigationController: UINavigationController = {
          let nav = UINavigationController(rootViewController: Lesson3DetailViewController(postData[indexPath.row].id))
+         
          nav.modalPresentationStyle = .fullScreen
          nav.navigationBar.isHidden = true
          nav.toolbar.isHidden = true

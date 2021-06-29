@@ -34,25 +34,30 @@ class CustomAppBar: UIView {
    
    override init(frame: CGRect) {
       super.init(frame: frame)
-      initializeSharedView()
+      self.addSubview(innerView)
+      innerView.addSubview(backButton)
+      
+      initializeConstraints()
    }
    
    required init?(coder: NSCoder) {
       fatalError("init(coder:) has not been implemented")
    }
    
-   func initializeSharedView(){
-      self.addSubview(innerView)
-      innerView.addSubview(backButton)
+   func initializeConstraints(){
+      var constraint: [NSLayoutConstraint] = []
       
-      innerView.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
-      innerView.heightAnchor.constraint(equalTo: self.heightAnchor).isActive = true
-      innerView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-      innerView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+      constraint.append(innerView.widthAnchor.constraint(equalTo: self.widthAnchor))
+      constraint.append(innerView.heightAnchor.constraint(equalTo: self.heightAnchor))
+      constraint.append(innerView.centerYAnchor.constraint(equalTo: self.centerYAnchor))
+      constraint.append(innerView.centerXAnchor.constraint(equalTo: self.centerXAnchor))
       
-      backButton.heightAnchor.constraint(equalToConstant: 45).isActive = true
-      backButton.centerYAnchor.constraint(equalTo: innerView.centerYAnchor, constant: 20).isActive = true
-      backButton.leadingAnchor.constraint(equalTo: innerView.leadingAnchor).isActive = true
+      constraint.append(backButton.heightAnchor.constraint(equalToConstant: 45))
+      constraint.append(backButton.centerYAnchor.constraint(equalTo: innerView.centerYAnchor, constant: 20))
+      constraint.append(backButton.leadingAnchor.constraint(equalTo: innerView.leadingAnchor))
+      
+      NSLayoutConstraint.activate(constraint)
+      
    }
    
 }

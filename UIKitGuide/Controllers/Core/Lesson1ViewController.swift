@@ -10,27 +10,27 @@ import UIKit
 
 class Lesson1ViewController: UIViewController {
    
-   var splitValue: UILabel!
-   var billInput: UITextField!
-   var tipInput: UITextField!
-   var totalInput: UITextField!
+   private var splitValue: UILabel!
+   private var billInput: UITextField!
+   private var tipInput: UITextField!
+   private var totalInput: UITextField!
    
-   var splitInt: Int = 1
-   var billValue: Double = 0.00
-   var tipValue: Double = 0.00
-   var totalValue: Double = 0.00
+   private var splitInt: Int = 1
+   private var billValue: Double = 0.00
+   private var tipValue: Double = 0.00
+   private var totalValue: Double = 0.00
    
 
    let appBar = CustomAppBar()
    
-   let contentView: UIView = {
+   private let contentView: UIView = {
       let mview = UIView()
       mview.translatesAutoresizingMaskIntoConstraints = false
       mview.backgroundColor = .white
       return mview
    }()
    
-   let lessonTitle: UILabel = {
+   private let lessonTitle: UILabel = {
       let label = UILabel()
       label.text = "Tip Calculator"
       label.font = .systemFont(ofSize: 30)
@@ -38,7 +38,7 @@ class Lesson1ViewController: UIViewController {
       return label
    }()
    
-   let contentvstack: UIStackView = {
+   private let contentvstack: UIStackView = {
       let mview = UIStackView()
       mview.axis = .vertical
       mview.distribution = .fillEqually

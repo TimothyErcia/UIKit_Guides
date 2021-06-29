@@ -42,14 +42,18 @@ class Lesson3ViewCell: UITableViewCell {
     }
    
    private func configureLabelContraint(){
-      label.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-      label.topAnchor.constraint(equalTo: self.topAnchor, constant: 15).isActive = true
-      label.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15).isActive = true
-      label.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+      var constraint: [NSLayoutConstraint] = []
+      
+      constraint.append(label.leadingAnchor.constraint(equalTo: leadingAnchor))
+      constraint.append(label.topAnchor.constraint(equalTo: topAnchor, constant: 15))
+      constraint.append(label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15))
+      constraint.append(label.trailingAnchor.constraint(equalTo: trailingAnchor))
+      
+      NSLayoutConstraint.activate(constraint)
    }
    
    func setView(post: Post){
-      label.text = post.body
+      label.text = post.title
    }
 
 }

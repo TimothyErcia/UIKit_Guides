@@ -8,10 +8,10 @@
 
 import Foundation
 
-enum APICollectionError: Error {
-   case responseError
+enum APICollectionError: String, Error {
+   case responseError = "Response error"
    case requestError
-   case urlError
+   case urlError = "URL not found"
 }
 
 class API_PostCollection {
@@ -56,15 +56,13 @@ class API_PostCollection {
       execute(request, completion)
    }
    
-   func execute(_ request: URLRequest, _ completion: @escaping (Post) -> ()){
+   private func execute(_ request: URLRequest, _ completion: @escaping (Post) -> ()){
       URLSession.shared.dataTask(with: request) { (data, response, error) in
          guard let postData = data else { return }
          
          do {
             let post = try JSONDecoder().decode(Post.self, from: postData)
-            DispatchQueue.global(qos: .userInitiated).async {
-               completion(post)
-            }
+            completion(post)
          } catch {
             print(error)
          }
@@ -72,15 +70,13 @@ class API_PostCollection {
       }.resume()
    }
    
-   func executeList(_ request: URLRequest, _ completion: @escaping ([Post]) -> ()){
+   private func executeList(_ request: URLRequest, _ completion: @escaping ([Post]) -> ()){
       URLSession.shared.dataTask(with: request) { (data, response, error) in
          guard let postData = data else { return }
          
          do {
             let post = try JSONDecoder().decode([Post].self, from: postData)
-            DispatchQueue.global(qos: .userInitiated).async {
-               completion(post)
-            }
+            completion(post)
          } catch {
             print(error)
          }
@@ -91,9 +87,9 @@ class API_PostCollection {
 }
 
 class API_PhotoCollection {
-   func getAllData(completion: @escaping ([Photos]?, Error?) -> ()){
-      guard let url = URL(string: Constants().MAIN_URL + "photos") else {
-         completion(nil, APICollectionError.urlError)
+   func getAllData(completion: @escaping (Result<[Photos], APICollectionError>) -> ()){
+      guard let url = URL(string: Constants().MAIN_URL + "photoss") else {
+         completion(.failure(.urlError))
          return
       }
       
@@ -103,22 +99,20 @@ class API_PhotoCollection {
       
       URLSession.shared.dataTask(with: request) { (data, response, error) in
          guard let photoData = data else {
-            completion(nil, APICollectionError.requestError)
+            completion(.failure(.responseError))
             return
          }
          
          guard let responseStatus = response as? HTTPURLResponse, responseStatus.statusCode == 200 else {
-            completion(nil, APICollectionError.responseError)
+            completion(.failure(.responseError))
             return
          }
          
          do {
             let photo = try JSONDecoder().decode([Photos].self, from: photoData)
-            DispatchQueue.global(qos: .utility).async {
-               completion(photo, nil)
-            }
+            completion(.success(photo))
          } catch {
-            completion(nil, APICollectionError.responseError)
+            completion(.failure(.responseError))
             return
          }
          

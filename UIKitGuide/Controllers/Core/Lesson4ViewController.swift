@@ -44,12 +44,7 @@ class Lesson4ViewController: UIViewController {
       tableView.delegate = self
       tableView.dataSource = self
       
-      viewModel.list.bind { [weak self] _ in
-         DispatchQueue.main.async {
-            self?.tableView.reloadData()
-         }
-      }
-      
+      bindViewModel()
       fetchData()
       
       view.backgroundColor = .white
@@ -83,14 +78,24 @@ class Lesson4ViewController: UIViewController {
       TransitionToLeft()
    }
    
+   private func bindViewModel(){
+      viewModel.list.bind { [weak self] _ in
+         DispatchQueue.main.async {
+            self?.tableView.reloadData()
+         }
+      }
+   }
+   
    private func fetchData(){
-      API_PhotoCollection().getAllData { (res, error) in
-         let que = DispatchQueue(label: "data-que")
-         que.async {
-            if res != nil {
-               self.viewModel.list.value = res!.compactMap({
+      API_PhotoCollection().getAllData {[weak self] (res) in
+         DispatchQueue.global().async {
+            switch res {
+            case .success(let data):
+               self?.viewModel.list.value = data.compactMap({
                   Lesson4ViewCellModel(imageView: $0.thumbnailUrl, titleView: $0.title, urlView: $0.thumbnailUrl)
                })
+            case .failure(let error):
+               print(error.rawValue)
             }
          }
       }

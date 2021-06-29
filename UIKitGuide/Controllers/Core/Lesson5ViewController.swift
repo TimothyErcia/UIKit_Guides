@@ -64,10 +64,9 @@ class Lesson5ViewController: UIViewController {
    }
    
    private func fetchData(){
-      CoreDataCollection().getAllItem { (res) in
-         let que = DispatchQueue(label: "data-que")
-         que.async {
-            self.viewModel.list.value = res.compactMap({
+      CoreDataCollection().getAllItem {[weak self] (res) in
+         DispatchQueue.global().async {
+            self?.viewModel.list.value = res.compactMap({
                Lesson5CellViewModel(createdAt: $0.createdAt, name: $0.name, hasStatus: $0.hasStatus)
             })
          }
@@ -79,10 +78,10 @@ class Lesson5ViewController: UIViewController {
       appBar.modalButton.addTarget(self, action: #selector(openModal), for: .touchUpInside)
       appBar.backButton.setTitle("Lesson 5", for: .normal)
       appBar.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 130)
+      
    }
    
    @objc private func openModal(){
-      
 //      CoreDataCollection().createItem(name: "Has Status", hasStatus: true)
 //      fetchData()
    }

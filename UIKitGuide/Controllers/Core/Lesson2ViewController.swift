@@ -13,14 +13,14 @@ class Lesson2ViewController: UIViewController {
    
    let appBar = CustomAppBar()
    
-   let contentView: UIView = {
+   private let contentView: UIView = {
       let mview = UIView()
       mview.translatesAutoresizingMaskIntoConstraints = false
       mview.backgroundColor = .white
       return mview
    }()
    
-   let lessonTitle: UILabel = {
+   private let lessonTitle: UILabel = {
       let label = UILabel()
       label.text = "Animations"
       label.font = .boldSystemFont(ofSize: 25)
@@ -28,7 +28,7 @@ class Lesson2ViewController: UIViewController {
       return label
    }()
    
-   let contentvstack: UIStackView = {
+   private let contentvstack: UIStackView = {
       let mview = UIStackView()
       mview.axis = .vertical
       mview.spacing = 10

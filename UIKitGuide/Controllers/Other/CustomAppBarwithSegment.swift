@@ -10,21 +10,21 @@ import UIKit
 
 class CustomAppBarwithSegment: UIView {
    
-   let innerView: UIView = {
+   public let innerView: UIView = {
       let mview = UIView()
       mview.backgroundColor = .systemBlue
       mview.translatesAutoresizingMaskIntoConstraints = false
       return mview
    }()
    
-   let vstack: UIStackView = {
+   private let vstack: UIStackView = {
       let mview = UIStackView()
       mview.axis = .vertical
       mview.translatesAutoresizingMaskIntoConstraints = false
       return mview
    }()
    
-   let hstack: UIStackView = {
+   private let hstack: UIStackView = {
       let mview = UIStackView()
       mview.axis = .horizontal
       mview.distribution = .fillEqually
@@ -32,7 +32,7 @@ class CustomAppBarwithSegment: UIView {
       return mview
    }()
    
-   let topView: UIView = {
+   private let topView: UIView = {
       let mview = UIView()
       mview.translatesAutoresizingMaskIntoConstraints = false
       return mview
@@ -66,6 +66,15 @@ class CustomAppBarwithSegment: UIView {
       return btn
    }()
    
+   public let segmentCtrl: UISegmentedControl = {
+      let seg = UISegmentedControl()
+      seg.translatesAutoresizingMaskIntoConstraints = false
+      seg.setTitleTextAttributes([NSAttributedString.Key.foregroundColor:
+                                  UIColor.systemRed], for: .normal)
+      return seg
+   }()
+   
+   
    override init(frame: CGRect) {
       super.init(frame: frame)
       self.addSubview(innerView)
@@ -73,13 +82,10 @@ class CustomAppBarwithSegment: UIView {
       
       vstack.addArrangedSubview(topView)
       vstack.addArrangedSubview(hstack)
+      initializeHStack()
       
       topView.addSubview(backButton)
       topView.addSubview(modalButton)
-      
-      createSegmentButton(name: "seg 1")
-      createSegmentButton(name: "seg 2")
-      createSegmentButton(name: "seg 3")
       
       initializeConstraint()
    }
@@ -88,7 +94,7 @@ class CustomAppBarwithSegment: UIView {
       fatalError("init(coder:) has not been implemented")
    }
    
-   func initializeConstraint(){
+   private func initializeConstraint(){
       innerView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
       innerView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
       innerView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
@@ -115,14 +121,18 @@ class CustomAppBarwithSegment: UIView {
       hstack.heightAnchor.constraint(equalToConstant: 35).isActive = true
    }
    
-   func createSegmentButton(name title: String) {
-      let segmentButton = UIButton()
-      segmentButton.setTitle(title, for: .normal)
-      segmentButton.translatesAutoresizingMaskIntoConstraints = false
-      
-      segmentButton.heightAnchor.constraint(equalToConstant: hstack.bounds.height).isActive = true
-      
-      hstack.addArrangedSubview(segmentButton)
+   private func initializeHStack(){
+      for item in 1...7 {
+         createSegmentButton(name: "seg \(item)", place: item)
+      }
+      segmentCtrl.selectedSegmentIndex = 0
+   }
+   
+   private func createSegmentButton(name title: String, place: Int) {
+      segmentCtrl.insertSegment(withTitle: title, at: place, animated: true)
+      segmentCtrl.heightAnchor.constraint(equalToConstant: hstack.bounds.height).isActive = true
+
+      hstack.addArrangedSubview(segmentCtrl)
    }
    
 }
