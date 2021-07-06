@@ -33,7 +33,7 @@ class CustomAppBar: UIView {
    }()
    
    override init(frame: CGRect) {
-      super.init(frame: frame)
+      super.init(frame: CGRect(x: 0, y: 40, width: UIScreen.main.bounds.width, height: 55))
       self.addSubview(innerView)
       innerView.addSubview(backButton)
       
@@ -47,13 +47,13 @@ class CustomAppBar: UIView {
    func initializeConstraints(){
       var constraint: [NSLayoutConstraint] = []
       
-      constraint.append(innerView.widthAnchor.constraint(equalTo: self.widthAnchor))
-      constraint.append(innerView.heightAnchor.constraint(equalTo: self.heightAnchor))
-      constraint.append(innerView.centerYAnchor.constraint(equalTo: self.centerYAnchor))
-      constraint.append(innerView.centerXAnchor.constraint(equalTo: self.centerXAnchor))
+      constraint.append(innerView.widthAnchor.constraint(equalTo: widthAnchor))
+      constraint.append(innerView.heightAnchor.constraint(equalTo: heightAnchor))
+      constraint.append(innerView.centerYAnchor.constraint(equalTo: centerYAnchor))
+      constraint.append(innerView.centerXAnchor.constraint(equalTo: centerXAnchor))
       
       constraint.append(backButton.heightAnchor.constraint(equalToConstant: 45))
-      constraint.append(backButton.centerYAnchor.constraint(equalTo: innerView.centerYAnchor, constant: 20))
+      constraint.append(backButton.topAnchor.constraint(equalTo: innerView.topAnchor, constant: 5))
       constraint.append(backButton.leadingAnchor.constraint(equalTo: innerView.leadingAnchor))
       
       NSLayoutConstraint.activate(constraint)

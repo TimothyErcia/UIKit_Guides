@@ -21,7 +21,7 @@ class Lesson1ViewController: UIViewController {
    private var totalValue: Double = 0.00
    
 
-   let appBar = CustomAppBar()
+   private let appBar = CustomAppBar()
    
    private let contentView: UIView = {
       let mview = UIView()
@@ -94,7 +94,6 @@ class Lesson1ViewController: UIViewController {
    }
    
    private func configureAppBar(){
-      appBar.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 90)
       appBar.backButton.setTitle("Lesson 1", for: .normal)
       appBar.backButton.addTarget(self, action: #selector(backToHome), for: .touchUpInside)
    }

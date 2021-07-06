@@ -9,5 +9,7 @@
 import Foundation
 
 public struct Constants {
+   static let shared = Constants()
+   
    let MAIN_URL: String = "https://jsonplaceholder.typicode.com/"
 }

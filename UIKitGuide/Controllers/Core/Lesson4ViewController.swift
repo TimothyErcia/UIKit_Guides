@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import Combine
 import ViewAnimator
 
 class Lesson4ViewController: UIViewController {
    
-   var viewModel = PhotoListViewModel()
+   var viewModel = PhotosViewModel()
+   var subscription = Set<AnyCancellable>()
    
    let animation = AnimationType.vector(CGVector(dx: 500, dy: 0))
    let appBar = CustomAppBar()
@@ -45,7 +47,6 @@ class Lesson4ViewController: UIViewController {
       tableView.dataSource = self
       
       bindViewModel()
-      fetchData()
       
       view.backgroundColor = .white
       configureAppbar()
@@ -64,14 +65,13 @@ class Lesson4ViewController: UIViewController {
       constraint.append(tableView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor))
       constraint.append(tableView.topAnchor.constraint(equalTo: contentView.topAnchor))
       constraint.append(tableView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor))
-
+      
       NSLayoutConstraint.activate(constraint)
    }
    
    private func configureAppbar(){
       appBar.backButton.setTitle("Lesson 4", for: .normal)
       appBar.backButton.addTarget(self, action: #selector(backToHome), for: .touchUpInside)
-      appBar.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 90)
    }
    
    @objc private func backToHome(){
@@ -79,43 +79,28 @@ class Lesson4ViewController: UIViewController {
    }
    
    private func bindViewModel(){
-      viewModel.list.bind { [weak self] _ in
-         DispatchQueue.main.async {
-            self?.tableView.reloadData()
-         }
-      }
+      viewModel.photos.sink { [weak self] _ in
+         self?.tableView.reloadData()
+      }.store(in: &subscription)
    }
-   
-   private func fetchData(){
-      API_PhotoCollection().getAllData {[weak self] (res) in
-         DispatchQueue.global().async {
-            switch res {
-            case .success(let data):
-               self?.viewModel.list.value = data.compactMap({
-                  Lesson4ViewCellModel(imageView: $0.thumbnailUrl, titleView: $0.title, urlView: $0.thumbnailUrl)
-               })
-            case .failure(let error):
-               print(error.rawValue)
-            }
-         }
-      }
-   }
-   
 }
 
 extension Lesson4ViewController: UITableViewDelegate, UITableViewDataSource {
    
    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-      return viewModel.list.value?.count ?? 0
+      return viewModel.photos.value.count
    }
    
    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
       let cell = tableView.dequeueReusableCell(withIdentifier: Lesson4ViewCell.identifier, for: indexPath) as! Lesson4ViewCell
       
-      let photoData = viewModel.list.value?[indexPath.row] ??
-         Lesson4ViewCellModel(imageView: "", titleView: "", urlView: "")
-      
+      let photoData = viewModel.photos.value[indexPath.row]
       cell.setViews(photo: photoData)
+      cell.setData(photo: photoData)
+      
+      cell.itemActionPublisher.sink { data in
+         print(data)
+      }.store(in: &subscription)
       return cell
    }
    

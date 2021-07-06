@@ -7,20 +7,17 @@
 //
 
 import UIKit
+import Combine
 
 class Lesson4ViewCell: UITableViewCell {
+   
+   var itemActionPublisher = PassthroughSubject<String, Never>()
+   var photos: Photos!
    
    static let identifier = "Lesson4ViewCell"
   
    private let innerView: UIView = {
       let mview = UIView()
-      mview.translatesAutoresizingMaskIntoConstraints = false
-      return mview
-   }()
-   
-   private let hstack: UIStackView = {
-      let mview = UIStackView()
-      mview.axis = .horizontal
       mview.translatesAutoresizingMaskIntoConstraints = false
       return mview
    }()
@@ -56,14 +53,16 @@ class Lesson4ViewCell: UITableViewCell {
    
    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
       super.init(style: style, reuseIdentifier: reuseIdentifier)
-      addSubview(hstack)
-      hstack.addArrangedSubview(photoImageView)
-      hstack.addArrangedSubview(innerView)
+      
+      addSubview(photoImageView)
+      addSubview(innerView)
       innerView.addSubview(vstack)
       vstack.addArrangedSubview(titleLabel)
       vstack.addArrangedSubview(urlLabel)
       
       configureConstraint()
+      let tapGesture = UITapGestureRecognizer(target: self, action: #selector(itemAction))
+      addGestureRecognizer(tapGesture)
    }
    
    required init?(coder: NSCoder) {
@@ -81,8 +80,8 @@ class Lesson4ViewCell: UITableViewCell {
       // Configure the view for the selected state
    }
    
-   func setViews(photo: Lesson4ViewCellModel){
-      guard let dataUrl = URL(string: photo.imageView ?? "") else { return }
+   func setViews(photo: Photos){
+      guard let dataUrl = URL(string: photo.thumbnailUrl ) else { return }
       
       DispatchQueue.global(qos: .utility).async {
          do {
@@ -95,22 +94,30 @@ class Lesson4ViewCell: UITableViewCell {
          }
       }
       
-      titleLabel.text = photo.titleView
-      urlLabel.text = photo.urlView
+      titleLabel.text = photo.title
+      urlLabel.text = photo.thumbnailUrl
    }
    
+   func setData(photo: Photos){
+      self.photos = photo
+   }
+   
+   @objc func itemAction(){
+      print("Hello world \(photos!)")
+   }
+      
    private func configureConstraint(){
       var constraint: [NSLayoutConstraint] = []
-      
-      //hstack
-      constraint.append(hstack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8))
-      constraint.append(hstack.trailingAnchor.constraint(equalTo: trailingAnchor , constant: -8))
-      constraint.append(hstack.topAnchor.constraint(equalTo: topAnchor, constant: 8))
-      constraint.append(hstack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8))
       
       //photoImage
       constraint.append(photoImageView.widthAnchor.constraint(equalToConstant: 100))
       constraint.append(photoImageView.heightAnchor.constraint(equalToConstant: 100))
+      constraint.append(photoImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8))
+      
+      //inner view
+      constraint.append(innerView.heightAnchor.constraint(equalToConstant: 100))
+      constraint.append(innerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8))
+      constraint.append(innerView.leadingAnchor.constraint(equalTo: photoImageView.trailingAnchor))
       
       //vstack
       constraint.append(vstack.trailingAnchor.constraint(equalTo: innerView.trailingAnchor))

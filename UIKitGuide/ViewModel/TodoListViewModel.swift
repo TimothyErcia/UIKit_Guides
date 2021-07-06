@@ -7,13 +7,29 @@
 //
 
 import Foundation
+import Combine
 
-struct TodoListViewModel {
-   var list: Observable<[Lesson5CellViewModel]> = Observable([])
-}
-
-struct Lesson5CellViewModel {
-   var createdAt: Date?
-   var name: String?
-   var hasStatus: Bool
+class TodoListViewModel {
+   
+   var todoListData = CurrentValueSubject<[TodoItem], Never>([TodoItem]())
+   var subscription = Set<AnyCancellable>()
+   
+   init(){
+      fetchListData()
+   }
+   
+   func fetchListData(){
+      CoreDataCollection.shared.getAllItem()
+         .receive(on: DispatchQueue.global(qos:.userInteractive))
+         .sink(receiveCompletion: { completion in
+            switch completion {
+            case .finished:
+               print("request finished")
+            case .failure(let fail):
+               print(fail.rawValue)
+            }
+         }, receiveValue: {[weak self] data in
+            self?.todoListData.send(data)
+         }).store(in: &subscription)
+   }
 }

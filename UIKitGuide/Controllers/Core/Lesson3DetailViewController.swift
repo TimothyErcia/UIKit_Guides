@@ -7,11 +7,14 @@
 //
 
 import UIKit
+import Combine
 
 class Lesson3DetailViewController: UIViewController {
    
    private var selectedId: Int?
-   private var postData: Post = Post(id: 0, userId: 0, title: "", body: "")
+   private var postData: Post = Post()
+   private var viewModel = PostViewModel()
+   private var subscription = Set<AnyCancellable>()
    
    private var postTitle: UILabel = {
       let lb = UILabel()
@@ -58,6 +61,7 @@ class Lesson3DetailViewController: UIViewController {
    init(_ selectedId: Int) {
       super.init(nibName: nil, bundle: nil)
       self.selectedId = selectedId
+      self.viewModel.fetchData(param: "\(selectedId)")
    }
 
    required init?(coder: NSCoder) {
@@ -106,28 +110,32 @@ class Lesson3DetailViewController: UIViewController {
    }
    
    private func fetchData(){
-      API_PostCollection().getData(param: "\(selectedId ?? 0)") { (res) in
-         DispatchQueue.global(qos: .userInitiated).async {
-            self.postData = res
-         }
-         
+      self.viewModel.postData.sink(receiveValue: { [weak self] data in
+         self?.postData = data
          DispatchQueue.main.async {
-            self.postTitle.text = "Title: \(self.postData.title)"
-            self.postBody.text = "Body: \(self.postData.body)"
-            self.postUserID.text = "UserId: " + "\(self.postData.userId)"
-            self.postId.text = "ID: " + "\(self.postData.id)"
+            if let title = self?.postData.title {
+               self?.postTitle.text = "Title: \(title)"
+            }
+            if let id = self?.postData.id {
+               self?.postId.text = "Id:  \(id)"
+            }
+            if let userId = self?.postData.userId {
+               self?.postUserID.text = "UserId: \(userId)"
+            }
+            if let body = self?.postData.body {
+               self?.postBody.text = "Body: \(body)"
+            }
          }
-      }
+      }).store(in: &subscription)
    }
    
    private func configureAppbar(){
       appBar.backButton.setTitle("Detail", for: .normal)
       appBar.backButton.addTarget(self, action: #selector(backToHome), for: .touchUpInside)
-      appBar.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 90)
    }
    
    @objc private func backToHome(_ sender: UIButton){
-      TransitionToLeft()
+      navigationController?.popViewController(animated: true)
    }
    
    

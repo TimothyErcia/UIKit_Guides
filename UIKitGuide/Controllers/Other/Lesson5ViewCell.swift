@@ -78,7 +78,7 @@ class Lesson5ViewCell: UITableViewCell {
       NSLayoutConstraint.activate(constraint)
    }
    
-   func setViews(views: Lesson5CellViewModel){
+   func setViews(views: TodoItem){
       let dateFormatter = DateFormatter()
       dateFormatter.dateFormat = "mm-dd-yyyy"
       

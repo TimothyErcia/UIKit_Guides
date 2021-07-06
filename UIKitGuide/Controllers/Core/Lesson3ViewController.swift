@@ -7,18 +7,22 @@
 //
 
 import UIKit
+import Combine
 
 class Lesson3ViewController: UIViewController {
    
-   private var postData: [Post] = []
-   
    private var newPostData: Post = Post(id: 1, userId: 1, title: "Sample title", body: "Sample body")
+   private var viewModel = PostViewModel()
+   private var subscription = Set<AnyCancellable>()
    
-   var appBar = CustomAppBar()
+   private var lastOffset: CGFloat = 0
+   
+   private let appBar = CustomAppBar()
    
    private let toolbarView: UIStackView = {
       let mview = UIStackView()
       mview.axis = .horizontal
+      mview.backgroundColor = .white
       mview.translatesAutoresizingMaskIntoConstraints = false
       return mview
    }()
@@ -27,6 +31,8 @@ class Lesson3ViewController: UIViewController {
       let search = UISearchBar()
       search.placeholder = "Search item"
       search.autocapitalizationType = .none
+      search.searchBarStyle = .minimal
+      search.backgroundColor = .white
       search.translatesAutoresizingMaskIntoConstraints = false
       return search
    }()
@@ -49,6 +55,7 @@ class Lesson3ViewController: UIViewController {
    
    private let contentView: UIView = {
       let mview = UIView()
+      mview.backgroundColor = .white
       mview.translatesAutoresizingMaskIntoConstraints = false
       return mview
    }()
@@ -74,7 +81,11 @@ class Lesson3ViewController: UIViewController {
       contentView.addSubview(toolbarView)
       contentView.addSubview(tableContent)
       
-      view.backgroundColor = .white
+      tableContent.dataSource = self
+      tableContent.delegate = self
+      searchBar.delegate = self
+      
+      view.backgroundColor = .systemBlue
       configureAppBar()
       configureToolbar()
       configureConstraint()
@@ -85,27 +96,25 @@ class Lesson3ViewController: UIViewController {
       var constraint: [NSLayoutConstraint] = []
       
       //content view
-      constraint.append(contentView.topAnchor.constraint(equalTo: appBar.bottomAnchor, constant: 15))
-      constraint.append(contentView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor))
-      constraint.append(contentView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor))
-      constraint.append(contentView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor))
+      constraint.append(contentView.topAnchor.constraint(equalTo: appBar.bottomAnchor))
+      constraint.append(contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor))
+      constraint.append(contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor))
+      constraint.append(contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor))
       
       //toolbar view
-      constraint.append(toolbarView.topAnchor.constraint(equalTo: contentView.topAnchor))
-      constraint.append(toolbarView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor))
+      constraint.append(toolbarView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8))
       
       //table view
-      constraint.append(tableContent.topAnchor.constraint(equalTo: toolbarView.bottomAnchor))
+      constraint.append(tableContent.topAnchor.constraint(equalTo: toolbarView.bottomAnchor, constant: 8))
       constraint.append(tableContent.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15))
-      constraint.append(tableContent.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -25))
-      constraint.append(tableContent.bottomAnchor.constraint(equalTo: contentView.bottomAnchor))
+      constraint.append(tableContent.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15))
+      constraint.append(tableContent.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -15))
       
       
       NSLayoutConstraint.activate(constraint)
    }
    
    private func configureToolbar(){
-      searchBar.delegate = self
       searchBar.heightAnchor.constraint(equalToConstant: 30).isActive = true
       searchBar.widthAnchor.constraint(equalToConstant: view.bounds.width - 35).isActive = true
       
@@ -117,24 +126,12 @@ class Lesson3ViewController: UIViewController {
    }
    
    private func populateView(){
-      API_PostCollection().getAllData { [weak self](res) in
-         
-         //thread for getting data
-         DispatchQueue.global().async {
-            self?.postData = res
-         }
-         
-         //thread for updating view
-         DispatchQueue.main.async {
-            self?.tableContent.delegate = self
-            self?.tableContent.dataSource = self
-            self?.tableContent.reloadData()
-         }
-      }
+      self.viewModel.postListData.sink(receiveValue: { [weak self] data in
+         self?.tableContent.reloadData()
+      }).store(in: &subscription)
    }
    
    private func configureAppBar(){
-      appBar.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 90)
       appBar.backButton.setTitle("Lesson 3", for: .normal)
       appBar.backButton.addTarget(self, action: #selector(backToHome), for: .touchUpInside)
    }
@@ -144,43 +141,46 @@ class Lesson3ViewController: UIViewController {
    }
    
    @objc private func createData(){
-      API_PostCollection().addData(post: newPostData) { [weak self](res) in
-         DispatchQueue.global().async {
-            print(res)
-         }
-         
-         DispatchQueue.main.async {
-            self?.tableContent.reloadData()
-         }
-      }
+      self.viewModel.postAddData.sink(receiveValue: { data in
+         print(data)
+      }).store(in: &subscription)
    }
 }
 
 extension Lesson3ViewController: UITableViewDelegate, UITableViewDataSource {
    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-      return postData.count
+      return viewModel.postListData.value.count
    }
    
    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
       let cell = tableView.dequeueReusableCell(withIdentifier: Lesson3ViewCell.identifier) as! Lesson3ViewCell
-      let post = postData[indexPath.row]
+      let post = viewModel.postListData.value[indexPath.row]
       cell.setView(post: post)
       
       return cell
    }
    
    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+      if let id = viewModel.postListData.value[indexPath.row].id {
+         navigationController?.pushViewController(Lesson3DetailViewController(id), animated: true)
+      }
+   }
+   
+   func scrollViewDidScroll(_ scrollView: UIScrollView) {
+      if(scrollView.contentOffset.y > lastOffset){
+         UIView.animate(withDuration: 0.5, animations: {
+            self.appBar.frame = CGRect(x: 0, y: 40, width: self.view.bounds.width, height: 0)
+            self.view.layoutIfNeeded()
+         })
+      }
+      else {
+         UIView.animate(withDuration: 0.5, animations: {
+            self.appBar.frame = CGRect(x: 0, y: 40, width: self.view.bounds.width, height: 55)
+            self.view.layoutIfNeeded()
+         })
+      }
       
-      let navigationController: UINavigationController = {
-         let nav = UINavigationController(rootViewController: Lesson3DetailViewController(postData[indexPath.row].id))
-         
-         nav.modalPresentationStyle = .fullScreen
-         nav.navigationBar.isHidden = true
-         nav.toolbar.isHidden = true
-         return nav
-      }()
-      
-      self.present(navigationController, animated: true)
+      lastOffset = scrollView.contentOffset.y
    }
 }
 
@@ -197,13 +197,10 @@ extension Lesson3ViewController: UISearchBarDelegate {
    
    func doSearch(_ text: String){
       if(text != ""){
-         let data = postData.filter {
-            $0.title.contains(text)
+         let data = viewModel.postListData.value.filter {
+            $0.title!.contains(text)
          }
-         postData = data
+         viewModel.postListData.value = data
       } else{ populateView() }
-      DispatchQueue.main.async {
-         self.tableContent.reloadData()
-      }
    }
 }

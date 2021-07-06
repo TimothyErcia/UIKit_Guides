@@ -16,11 +16,11 @@ class Lesson6ViewController: UITabBarController {
                                                                        title: "Tab 1",
                                                                        icon: "function")
    
-   private let tab2Controller = UINavigationController().setController(tab: Tab3ViewController(),
+   private let tab2Controller = UINavigationController().setController(tab: Tab2ViewController(),
                                                                        title: "Tab 2",
                                                                        icon: "house")
    
-   private let tab3Controller = UINavigationController().setController(tab: Tab2ViewController(),
+   private let tab3Controller = UINavigationController().setController(tab: Tab3ViewController(),
                                                                        title: "Tab 3",
                                                                        icon: "camera.circle")
    
@@ -51,7 +51,6 @@ class Lesson6ViewController: UITabBarController {
    }
    
    private func configureAppbar(){
-      appBar.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 90)
       appBar.innerView.backgroundColor = .clear
       appBar.backButton.addTarget(self, action: #selector(backToHome), for: .touchUpInside)
       appBar.backButton.setTitle("Lesson 6", for: .normal)

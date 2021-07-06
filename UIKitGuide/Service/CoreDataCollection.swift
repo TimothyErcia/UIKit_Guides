@@ -8,20 +8,27 @@
 
 import Foundation
 import UIKit
+import Combine
 
-class CoreDataCollection {
+enum CoreDataError: String, Error {
+   case requestError = "Error occured"
+   case storageError
+}
+
+public class CoreDataCollection {
+   
+   static let shared = CoreDataCollection()
    
    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-
-   func getAllItem(completion: @escaping ([TodoItem]) -> ()){
-      do {
-         let item: [TodoItem] = try context.fetch(TodoItem.fetchRequest())
-         
-         DispatchQueue.global(qos: .background).async {
-            completion(item)
+   
+   func getAllItem() -> Future<[TodoItem], CoreDataError>{
+      return Future { promise in
+         do {
+            let item: [TodoItem] = try self.context.fetch(TodoItem.fetchRequest())
+            promise(.success(item))
+         } catch {
+            promise(.failure(.requestError))
          }
-      } catch {
-         print("Has error")
       }
    }
    
@@ -48,7 +55,7 @@ class CoreDataCollection {
       do {
          try context.save()
       } catch {
-         print("Has error")
+         print(CoreDataError.requestError.rawValue)
       }
    }
 }

@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import Combine
 import ViewAnimator
 
 class Lesson5ViewController: UIViewController {
    
+   private var subscription = Set<AnyCancellable>()
    private var viewModel = TodoListViewModel()
    
    private let appBar = CustomAppBarwithSegment()
@@ -33,7 +35,6 @@ class Lesson5ViewController: UIViewController {
       
       configureAppbar()
       configureConstraint()
-      bindData()
       fetchData()
       view.backgroundColor = .white
    }
@@ -55,22 +56,10 @@ class Lesson5ViewController: UIViewController {
       NSLayoutConstraint.activate(constraint)
    }
    
-   private func bindData(){
-      viewModel.list.bind { [weak self] _ in
-         DispatchQueue.main.async {
-            self?.tableView.reloadData()
-         }
-      }
-   }
-   
    private func fetchData(){
-      CoreDataCollection().getAllItem {[weak self] (res) in
-         DispatchQueue.global().async {
-            self?.viewModel.list.value = res.compactMap({
-               Lesson5CellViewModel(createdAt: $0.createdAt, name: $0.name, hasStatus: $0.hasStatus)
-            })
-         }
-      }
+      viewModel.todoListData.sink(receiveValue: {[weak self] _ in
+         self?.tableView.reloadData()
+      }).store(in: &subscription)
    }
    
    private func configureAppbar(){
@@ -94,15 +83,13 @@ class Lesson5ViewController: UIViewController {
 
 extension Lesson5ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-      return viewModel.list.value?.count ?? 0
+      return viewModel.todoListData.value.count
    }
    
    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
       let cell = tableView.dequeueReusableCell(withIdentifier: Lesson5ViewCell.identifier, for: indexPath) as! Lesson5ViewCell
       
-      let todoData = viewModel.list.value?[indexPath.row] ??
-                     Lesson5CellViewModel(createdAt: Date(), name: "", hasStatus: false)
-      
+      let todoData = viewModel.todoListData.value[indexPath.row]
       cell.setViews(views: todoData)
       
       return cell
